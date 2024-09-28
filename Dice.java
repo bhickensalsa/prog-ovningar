@@ -4,7 +4,6 @@ import java.util.Random;
 public class Dice {
     int value;
     Random random = new Random();
-
     
     public int getValue() {
         return value;
@@ -23,9 +22,53 @@ public class Dice {
         return dice;
     }
 
-    // public static int highestAdjacentRolls(ArrayList<Dice> sequence) {
-    //     int current = 0;
-    //     int next;
-    //     // Fortsätt här
-    // }
+    public static int highestAdjacentRolls(ArrayList<Dice> sequence) {
+        if (sequence == null || sequence.size() < 2) {
+            throw new IllegalArgumentException("The sequence must contain at least two dice.");
+        }
+    
+        int max = Integer.MIN_VALUE;
+    
+        for (int j = 1; j < sequence.size(); j++) {
+            int sum = sequence.get(j - 1).getValue() + sequence.get(j).getValue();
+            if (sum > max) {
+                max = sum;
+            }
+        }
+        return max;
+    }
+
+    public static int smallestAdjacentRolls(ArrayList<Dice> sequence) {
+        if (sequence == null || sequence.size() < 2) {
+            throw new IllegalArgumentException("The sequence must contain at least two dice.");
+        }
+    
+        int min = Integer.MAX_VALUE;
+    
+        for (int j = 1; j < sequence.size(); j++) {
+            int sum = sequence.get(j - 1).getValue() + sequence.get(j).getValue();
+            if (sum < min) {
+                min = sum;
+            }
+        }
+        return min;
+    }
+    
+
+    public static void main(String[] args) {
+        ArrayList<Dice> diceList = sequenceOfDice(5);
+        ArrayList<Integer> diceValues = new ArrayList<>();
+
+        for (Dice dice : diceList) {
+            diceValues.add(dice.getValue());
+        }
+        for (int value : diceValues) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+        System.out.println("============");
+        System.out.println("Highest adjacent: " + highestAdjacentRolls(diceList));
+        System.out.println("============");
+        System.out.println("Smallest adjacent: " + smallestAdjacentRolls(diceList));
+    }
 }
