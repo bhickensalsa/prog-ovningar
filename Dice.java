@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Dice {
-    int value;
+    protected int value;
     Random random = new Random();
     
     public int getValue() {

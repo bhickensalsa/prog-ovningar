@@ -17,6 +17,11 @@ public class RandomTester {
         Collections.shuffle(copy);
         return copy;
     }
+
+    // public static ArrayList<Dice> remove(ArrayList<Dice> sequence, int n) {
+        
+    // }
+
     public static void main(String[] args) {
         // When declaring a constant, it is a convention to put the name in capital letters
         final int AMOUNT_OF_NUMBERS = 5;
