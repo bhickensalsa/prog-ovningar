@@ -2,8 +2,11 @@ import java.util.NoSuchElementException;
 import java.util.EmptyStackException;
 
 /**
- * A singly linked list.
+ * A singly linked list implementation. This list allows for stack operations
+ * such as push, pop, and top, as well as other basic list operations like adding,
+ * removing, and accessing elements.
  * 
+ * @param <T> The type of elements stored in the list.
  * @author Philip Jonsson
  * @version 2025-01-23
  */
@@ -12,11 +15,23 @@ public class LinkedList<T> implements Stack<T> {
     private ListElement<T> last;    // Last element in list.
     private int size;               // Number of elements in list.
     
+    /**
+     * Pushes the specified element onto the stack by adding it at the beginning
+     * of the list.
+     *
+     * @param elem The element to be pushed onto the stack.
+     */
     @Override
     public void push(T elem) {
         addFirst(elem);
     }
 
+    /**
+     * Removes and returns the first element in the stack (the top of the list).
+     *
+     * @return The removed element.
+     * @throws EmptyStackException if the stack is empty.
+     */
     @Override
     public T pop() {
         if (first == null) {
@@ -25,6 +40,13 @@ public class LinkedList<T> implements Stack<T> {
         return removeFirst();
     }
 
+    /**
+     * Returns the element at the top of the stack (the first element in the list)
+     * without removing it.
+     *
+     * @return The element at the top of the stack.
+     * @throws EmptyStackException if the stack is empty.
+     */
     @Override
     public T top() {
         if (first == null) {
@@ -35,6 +57,8 @@ public class LinkedList<T> implements Stack<T> {
 
     /**
      * A list element.
+     * 
+     * This class holds the data and the reference to the next element in the list.
      */
     private static class ListElement<T> {
         public T data;
@@ -47,7 +71,7 @@ public class LinkedList<T> implements Stack<T> {
     }
     
     /**
-     * Creates an empty list.
+     * Creates an empty linked list.
      */
     public LinkedList() {
         this.first = null;
@@ -94,7 +118,9 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
-     * @return The head of the list.
+     * Returns the first element in the list.
+     *
+     * @return The first element in the list.
      * @throws NoSuchElementException if the list is empty.
      */
     public T getFirst() {
@@ -105,7 +131,9 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
-     * @return The tail of the list.
+     * Returns the last element in the list.
+     *
+     * @return The last element in the list.
      * @throws NoSuchElementException if the list is empty.
      */
     public T getLast() {
@@ -116,11 +144,11 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
-     * Returns an element from a specified index.
+     * Returns an element at the specified index in the list.
      *
-     * @param index A list index.
+     * @param index The index of the element to return.
      * @return The element at the specified index.
-     * @throws IndexOutOfBoundsException if the index is out of bounds.
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 or index >= size).
      */
     public T get(int index) {
         if (index >= size || index < 0) {
@@ -154,7 +182,7 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
-     * Removes all of the elements from the list.
+     * Removes all elements from the list, effectively clearing the list.
      */
     public void clear() {
         first = null;
@@ -163,6 +191,8 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
+     * Returns the number of elements in the list.
+     *
      * @return The number of elements in the list.
      */
     @Override
@@ -171,11 +201,11 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
-     * Note that by definition, the list is empty if both first and last
-     * are null, regardless of what value the size field holds (it should
-     * be 0, otherwise something is wrong).
+     * Checks whether the list is empty.
+     * 
+     * A list is considered empty if its first element is null.
      *
-     * @return <code>true</code> if this list contains no elements.
+     * @return <code>true</code> if the list is empty, <code>false</code> otherwise.
      */
     @Override
     public boolean isEmpty() {
@@ -183,13 +213,11 @@ public class LinkedList<T> implements Stack<T> {
     }
 
     /**
-     * Creates a string representation of this list. The string
-     * representation consists of a list of the elements enclosed in
-     * square brackets ("[]"). Adjacent elements are separated by the
-     * characters ", " (comma and space). Elements are converted to
-     * strings by the method toString() inherited from Object.
+     * Returns a string representation of the list. The string consists of the
+     * list elements enclosed in square brackets, with adjacent elements separated
+     * by a comma and a space.
      *
-     * Examples:
+     * Example:
      *  "[1, 4, 2, 3, 44]"
      *  "[]"
      *
@@ -201,7 +229,7 @@ public class LinkedList<T> implements Stack<T> {
             return "[]";
         }
 
-        StringBuilder string = new StringBuilder(); // Use Stringbuilder to create string
+        StringBuilder string = new StringBuilder(); // Use StringBuilder to create string
         string.append("[");
         ListElement<T> currentElement = first; // Get the first element
         while (currentElement != null) {
