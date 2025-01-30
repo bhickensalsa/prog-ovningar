@@ -28,6 +28,7 @@ public class Postfix {
     public static int evaluate(String expr) throws ExpressionException {
         // Stack to hold operands during evaluation
         LinkedList<Integer> stack = new LinkedList<>();
+        expr = expr.trim();
 
         // Split the expression by whitespace
         String[] splitExpr = expr.split("\\s+");
@@ -73,6 +74,9 @@ public class Postfix {
                         throw new ExpressionException("Unknown operator: " + s);  // Invalid operator
                 }       
             }
+            else {
+                throw new ExpressionException("Invalid character");
+            }
         }
 
         // Check that exactly one value remains on the stack (the result)
@@ -114,6 +118,9 @@ public class Postfix {
      *   followed by a single '0'.
      */
     private static boolean isInteger(String s) {
+        if (s.matches("-?0\\d+")) { // Check for leading zeroes using regex
+            return false;
+        }
         try {
             Integer.parseInt(s);  // Try parsing the string into an integer
             return true;  // If parsing works, it's a valid integer
