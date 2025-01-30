@@ -26,44 +26,61 @@ public class Postfix {
      * @throws      ExpressionException if the expression is wrong
      */
     public static int evaluate(String expr) throws ExpressionException {
+        // Stack to hold operands during evaluation
         LinkedList<Integer> stack = new LinkedList<>();
-        String temp = expr;
-        String[] splitExpr = temp.split("\\s+");
+
+        // Split the expression by whitespace
+        String[] splitExpr = expr.split("\\s+");
+
+        // Process each character in the split expression
         for (String s : splitExpr) {
+
+            // If the character is an integer, push it to the stack
             if (isInteger(s)) {
                 stack.push(Integer.valueOf(s));
             }
+            // If the character is an operator, perform the operation
             else if (isOperator(s)) {
+
+                // Check that there are enough operands in the stack
                 if (stack.size() < 2) {
                     throw new ExpressionException("Stack contains insufficient operands");
                 }
+
+                // Pop two operands from the stack
                 int operand2 = stack.pop();  // Pop the second operand
                 int operand1 = stack.pop();  // Pop the first operand
 
+                // Perform the operation based on the operator
                 switch (s) {
                     case "+":
-                        stack.push(operand1 + operand2);
+                        stack.push(operand1 + operand2);  // Addition
                         break;
                     case "-":
-                        stack.push(operand1 - operand2);
+                        stack.push(operand1 - operand2);  // Subtraction
                         break;
                     case "*":
-                        stack.push(operand1 * operand2);
+                        stack.push(operand1 * operand2);  // Multiplication
                         break;
                     case "/":
+                        // Check for division by zero
                         if (operand2 == 0) {
                             throw new ExpressionException("Division by zero.");
                         }
-                        stack.push(operand1 / operand2);
+                        stack.push(operand1 / operand2);  // Division
                         break;
                     default:
-                        throw new ExpressionException("Unknown operator: " + s);
+                        throw new ExpressionException("Unknown operator: " + s);  // Invalid operator
                 }       
             }
         }
+
+        // Check that exactly one value remains on the stack (the result)
         if (stack.size() != 1) {
             throw new ExpressionException("Invalid postfix expression.");
         }
+
+        // Pop and return the final result
         return stack.pop();
     }
 
